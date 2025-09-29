@@ -1243,6 +1243,44 @@
         .link-hidden {
             opacity: 0.1;
         }
+
+        /* Diagram Footer */
+        .diagram-footer {
+            display: flex;
+            justify-content: center;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 0 0 8px 8px;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .diagram-close-button {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            background: #6b7280;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .diagram-close-button:hover {
+            background: #4b5563;
+            transform: translateY(-1px);
+        }
+
+        .diagram-close-button:active {
+            transform: translateY(0);
+        }
+
+        .diagram-close-button i {
+            font-size: 12px;
+        }
     </style></head>
 <body>
     <div class="app-container">
@@ -3972,6 +4010,13 @@
             </div>
             
             <div class="connection-diagram" id="connectionSvg"></div>
+            
+            <div class="diagram-footer">
+                <button class="diagram-close-button" onclick="closeConnectionDiagram()">
+                    <i class="fas fa-times"></i>
+                    닫기
+                </button>
+            </div>
         </div>
     </div>
 
