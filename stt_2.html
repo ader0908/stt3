@@ -1052,30 +1052,6 @@
             color: #374151;
         }
 
-        .connection-stats {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 20px;
-            padding: 12px;
-            background: #f8f9fa;
-            border-radius: 8px;
-        }
-
-        .connection-stat-item {
-            text-align: center;
-        }
-
-        .connection-stat-number {
-            font-size: 24px;
-            font-weight: 700;
-            color: #3b82f6;
-        }
-
-        .connection-stat-label {
-            font-size: 12px;
-            color: #6b7280;
-            margin-top: 4px;
-        }
 
         .connection-diagram {
             width: 100%;
@@ -1143,7 +1119,7 @@
         .diagram-legend {
             display: flex;
             justify-content: center;
-            gap: 20px;
+            gap: 30px;
             margin-bottom: 15px;
             padding: 10px;
             background: #f8f9fa;
@@ -1170,6 +1146,11 @@
 
         .legend-model {
             background: #10b981;
+        }
+
+        .legend-item strong {
+            color: #3b82f6;
+            font-weight: 700;
         }
 
         /* Diagram Container */
@@ -3966,25 +3947,15 @@
             <button class="connection-diagram-close" onclick="closeConnectionDiagram()">×</button>
         </div>
         
-        <div class="connection-stats">
-            <div class="connection-stat-item">
-                <div class="connection-stat-number" id="serviceCount">3</div>
-                <div class="connection-stat-label">서비스</div>
-            </div>
-            <div class="connection-stat-item">
-                <div class="connection-stat-number" id="modelCount">4</div>
-                <div class="connection-stat-label">모델</div>
-            </div>
-        </div>
         
         <div class="diagram-legend">
             <div class="legend-item">
                 <div class="legend-color legend-service"></div>
-                <span>서비스</span>
+                <span>서비스 <strong id="serviceCount">0</strong>개</span>
             </div>
             <div class="legend-item">
                 <div class="legend-color legend-model"></div>
-                <span>모델</span>
+                <span>모델 <strong id="modelCount">0</strong>개</span>
             </div>
         </div>
         
@@ -4397,7 +4368,7 @@
             const svg = d3.select('#connectionSvg')
                 .append('svg')
                 .attr('width', 620)
-                .attr('height', 550);
+                .attr('height', 400);
 
             // Add arrow marker
             svg.append('defs').append('marker')
@@ -4414,9 +4385,9 @@
 
             // Create force simulation
             const simulation = d3.forceSimulation(allNodes)
-                .force('link', d3.forceLink(diagramData.connections).id(d => d.id).distance(70))
-                .force('charge', d3.forceManyBody().strength(-200))
-                .force('center', d3.forceCenter(310, 275))
+                .force('link', d3.forceLink(diagramData.connections).id(d => d.id).distance(60))
+                .force('charge', d3.forceManyBody().strength(-180))
+                .force('center', d3.forceCenter(310, 200))
                 .force('collision', d3.forceCollide().radius(25));
 
             // Create links
@@ -4476,12 +4447,12 @@
                 // Apply boundary constraints
                 allNodes.forEach(d => {
                     const radius = 22; // Node radius
-                    const margin = 10; // Margin from edges
+                    const margin = 15; // Margin from edges
                     
                     // Constrain x position
                     d.x = Math.max(radius + margin, Math.min(620 - radius - margin, d.x));
                     // Constrain y position  
-                    d.y = Math.max(radius + margin, Math.min(550 - radius - margin, d.y));
+                    d.y = Math.max(radius + margin, Math.min(400 - radius - margin, d.y));
                 });
 
                 link
@@ -4508,11 +4479,11 @@
 
             function dragged(event, d) {
                 const radius = 22;
-                const margin = 10;
+                const margin = 15;
                 
                 // Apply boundary constraints during drag
                 d.fx = Math.max(radius + margin, Math.min(620 - radius - margin, event.x));
-                d.fy = Math.max(radius + margin, Math.min(550 - radius - margin, event.y));
+                d.fy = Math.max(radius + margin, Math.min(400 - radius - margin, event.y));
             }
 
             function dragended(event, d) {
